@@ -1,0 +1,32 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Azure/BatchAI/master/schemas/2018-05-01/job.json",
+  "properties": {
+    "nodeCount": 3,
+    "tensorFlowSettings": {
+      "parameterServerCount": 1,
+      "workerCount": 3,
+      "pythonScriptFilePath": "$AZ_BATCHAI_INPUT_SCRIPT/mnist.py",
+      "masterCommandLineArgs": "--master --model-directory $AZ_BATCHAI_MOUNT_ROOT/bfs/mnist/model",
+      "workerCommandLineArgs": "--model-directory $AZ_BATCHAI_MOUNT_ROOT/bfs/mnist/model",
+      "parameterServerCommandLineArgs": "--model-directory $AZ_BATCHAI_MOUNT_ROOT/bfs/mnist/model"
+    },
+    "stdOutErrPathPrefix": "$AZ_BATCHAI_MOUNT_ROOT/bfs/mnist/stderr",
+    "inputDirectories": [
+      {
+        "id": "SCRIPT",
+        "path": "$AZ_BATCHAI_MOUNT_ROOT/bfs/mnist"
+      }
+    ],
+    "outputDirectories": [
+      {
+        "id": "DEFAULT",
+        "pathPrefix": "$AZ_BATCHAI_MOUNT_ROOT/bfs/mnist/out"
+      }
+    ],
+    "containerSettings": {
+      "imageSourceRegistry": {
+        "image": "tensorflow/tensorflow:latest-gpu-py3"
+      }
+    }
+  }
+}
